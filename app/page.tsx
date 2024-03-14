@@ -30,7 +30,7 @@ export interface DefaultWalletOptions {
 
 export type RainbowWalletOptions = DefaultWalletOptions;
 
-const rainbow = ({ projectId }: RainbowWalletOptions): Wallet => ({
+const capsuleWallet = ({ projectId }: RainbowWalletOptions): Wallet => ({
   id: "capsule",
   name: "Capsule",
   iconUrl: "/static/images/capsule-icon.png",
@@ -66,7 +66,7 @@ const connectors = connectorsForWallets(
     },
     {
       groupName: "Custom",
-      wallets: [rainbow],
+      wallets: [capsuleWallet],
     },
   ],
   {
