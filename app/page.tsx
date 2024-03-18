@@ -18,12 +18,9 @@ import { WagmiProvider, createConfig, createConnector, http } from "wagmi";
 import { mainnet, polygon, optimism, arbitrum, base, zora } from "wagmi/chains";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import Main from "./main";
-// import { openPopup } from "@usecapsule/react-sdk/dist/modal/utils";
 import Capsule, { Environment } from "@usecapsule/react-sdk";
-
-const PROJECT_ID = "2c84fab0c5c7fc61e1e0dbc17057cfb7";
-const APP_NAME = "capsule-rainbow-kit";
-
+import { API_KEY, PROJECT_ID, APP_NAME } from "./constants";
+import "./globals.css";
 export interface DefaultWalletOptions {
   projectId: string;
   walletConnectParameters?: RainbowKitWalletConnectParameters;
@@ -34,12 +31,16 @@ export type RainbowWalletOptions = DefaultWalletOptions;
 import CapsuleWeb, { CapsuleModal, newTheme } from "@usecapsule/react-sdk";
 import { createRoot } from "react-dom/client";
 
-function renderModal(capsule: CapsuleWeb, appName: string, onCloseArg: () => void): void {
-  const container = document.createElement('div');
+function renderModal(
+  capsule: CapsuleWeb,
+  appName: string,
+  onCloseArg: () => void
+): void {
+  const container = document.createElement("div");
   document.body.appendChild(container); // Add the container to the DOM
   const root = createRoot(container);
   const onClose = () => {
-    root.unmount()
+    root.unmount();
     container.remove(); // Remove the container from the DOM
     onCloseArg();
   };
@@ -55,7 +56,6 @@ function renderModal(capsule: CapsuleWeb, appName: string, onCloseArg: () => voi
   );
 }
 
-
 const capsuleWallet = ({ projectId }: RainbowWalletOptions): Wallet => ({
   id: "capsule",
   name: "Capsule",
@@ -63,25 +63,11 @@ const capsuleWallet = ({ projectId }: RainbowWalletOptions): Wallet => ({
   iconBackground: "#000000",
   desktop: {
     getUri: (_uri: string) => {
-      // will need to fill in actual api key to go through modal flow
-      const API_KEY = '';
       const capsule = new Capsule(Environment.DEVELOPMENT, API_KEY);
-      renderModal(capsule, 'Rainbow Test', () => {});
-      return '';
-      // openPopup("https://demo.beta.usecapsule.com/");
-      // return "https://demo.beta.usecapsule.com/";
+      renderModal(capsule, "Rainbow Test", () => {});
+      return "";
     },
   },
-  // downloadUrls: {
-  //   safari:
-  //     "https://7f4shq8oyfd.typeform.com/to/F86oVLhb?typeform-source=usecapsule.com",
-  // },
-  // mobile: {
-  //   getUri: (uri: string) => uri,
-  // },
-  // desktop: {
-  //   getUri: (uri: string) => uri,
-  // },
   createConnector: getWalletConnectConnector({ projectId }),
 });
 

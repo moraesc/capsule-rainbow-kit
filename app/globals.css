@@ -31,3 +31,7 @@ body {
     text-wrap: balance;
   }
 }
+
+.chakra-modal__content-container:first-child {
+  z-index: 10000000000 !important;
+}
